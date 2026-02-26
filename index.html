@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zone01 · Profile</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="bg-canvas">
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+  </div>
+  <div class="bg-grid"></div>
+
+  <main class="login-wrapper">
+
+    <div class="login-panel">
+      <div class="logo">
+        <svg id="cyber-eye" width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <!-- Outer neon glow -->
+          <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow dx="0" dy="0" stdDeviation="3"
+              flood-color="var(--accent)" flood-opacity="0.6"/>
+          </filter>
+
+          <!-- Eye shape (outline with glow) -->
+          <path id="eye-shape"
+                d="M10 40 Q40 5 70 40 Q40 75 10 40 Z"
+                stroke="var(--accent)"
+                stroke-width="3"
+                fill="none"
+                filter="url(#neonGlow)"/>
+
+          <!-- White inner part (sclera) -->
+          <path
+                d="M10 40 Q40 5 70 40 Q40 75 10 40 Z"
+                fill="url(#scleraGradient)"
+                filter="url(#innerSoft)"
+                opacity="0.6"/>
+
+          <!-- Iris -->
+          <circle id="iris"
+                  cx="40"
+                  cy="40"
+                  r="11"
+                  fill="var(--accent)"
+                  style="opacity:0.25"/>
+
+          <!-- Pupil -->
+          <circle id="pupil"
+                  cx="40"
+                  cy="40"
+                  r="6"
+                  fill="var(--bg)"
+                  style="opacity:1"/>
+
+        </svg>
+        <div class="logo-text"><span>GraphQL</span>Dev</div>
+      </div>
+
+      <h1>Welcome back</h1>
+      <!-- <p class="subtitle">// sign in to view your profile</p> -->
+       <br>
+       <br>
+
+      <form id="login-form" novalidate>
+        <div class="form-field">
+          <label for="username">Username or Email</label>
+          <div class="input-wrap">
+            <input type="text" id="username" name="username"
+              placeholder="your.login"
+              autocomplete="username" required />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="password">Password</label>
+          <div class="input-wrap">
+            <input type="password" id="password" name="password"
+              placeholder="••••••••••••"
+              autocomplete="current-password" required />
+            <button type="button" id="pw-toggle" class="pw-toggle" aria-label="Show password" aria-pressed="false">
+              <svg id="pw-icon-show" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <svg id="pw-icon-hide" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="error-msg" class="error-box" role="alert">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span id="error-text"></span>
+        </div>
+
+        <button type="submit" class="btn-signin" id="submit-btn">
+          <span class="btn-label">Sign In →</span>
+          <span class="spinner"></span>
+        </button>
+      </form>
+    </div>
+
+    <aside class="info-panel">
+      <div>
+        <h2>What you'll see</h2>
+        <ul class="feature-list">
+          <li>
+            <div class="feature-icon">📊</div>
+            <div class="feature-text">
+              <strong>XP Timeline</strong>
+              <small>Track your experience<br>earned over time</small>
+            </div>
+          </li>
+          <li>
+            <div class="feature-icon">🎯</div>
+            <div class="feature-text">
+              <strong>Audit Ratio</strong>
+              <small>Your giving vs receiving<br>audit balance</small>
+            </div>
+          </li>
+          <li>
+            <div class="feature-icon">🏆</div>
+            <div class="feature-text">
+              <strong>Project Stats</strong>
+              <small>Pass rates, grades,<br>and project history</small>
+            </div>
+          </li>
+          <li>
+            <div class="feature-icon">⚡</div>
+            <div class="feature-text">
+              <strong>Top Projects</strong>
+              <small>XP earned breakdown<br>by project</small>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="info-footer">
+        <span class="dot"></span>Secured via JWT Bearer Auth<br>
+        Data from GraphQL API · platform.zone01.gr
+      </div>
+    </aside>
+
+  </main>
+
+  <script src="config.js"></script>
+  <script src="shimmer.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    // Inline error display fix since auth.js references DOM elements
+    function showLoginError(message) {
+      const box = document.getElementById("error-msg");
+      const txt = document.getElementById("error-text");
+      if (!box || !txt) return;
+      txt.textContent = message;
+      box.classList.add("visible");
+      box.classList.remove("shake");
+      void box.offsetWidth;
+      box.classList.add("shake");
+    }
+    function hideLoginError() {
+      const box = document.getElementById("error-msg");
+      if (box) box.classList.remove("visible");
+    }
+    function setLoginLoading(loading) {
+      const btn = document.getElementById("submit-btn");
+      if (!btn) return;
+      btn.disabled = loading;
+      btn.classList.toggle("loading", loading);
+    }
+  </script>
+
+  <script>
+    const svg = document.getElementById("cyber-eye");
+    const eye = document.getElementById("eye-shape");
+    const pupil = document.getElementById("pupil");
+    const iris = document.getElementById("iris");
+
+    const centerX = 40;
+    const centerY = 40;
+    const maxMove = 6;
+
+    /* ------------------ CURSOR TRACKING ------------------ */
+    document.addEventListener("mousemove", (e) => {
+      const rect = svg.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const dx = x - centerX;
+      const dy = y - centerY;
+
+      const angle = Math.atan2(dy, dx);
+      const distance = Math.min(maxMove, Math.hypot(dx, dy));
+
+      const moveX = Math.cos(angle) * distance;
+      const moveY = Math.sin(angle) * distance;
+
+      pupil.setAttribute("cx", centerX + moveX);
+      pupil.setAttribute("cy", centerY + moveY);
+
+      iris.setAttribute("cx", centerX + moveX * 0.4);
+      iris.setAttribute("cy", centerY + moveY * 0.4);
+    });
+
+    /* ------------------ BLINK ------------------ */
+    const CLOSE_MS = 80;
+    const HOLD_MS  = 40;
+    const OPEN_MS  = 120;
+
+    function blink() {
+      // ── 1. Close: squash the eye outline + fade internals out ──
+      eye.style.transition   = `d ${CLOSE_MS}ms ease-in`;
+      pupil.style.transition = `opacity ${CLOSE_MS}ms ease-in`;
+      iris.style.transition  = `opacity ${CLOSE_MS}ms ease-in`;
+
+      eye.setAttribute("d", "M10 40 Q40 39 70 40 Q40 41 10 40 Z");
+      pupil.style.opacity = "0";
+      iris.style.opacity  = "0";
+
+      // ── 2. Hold closed, then open ──────────────────────────────
+      setTimeout(() => {
+        eye.style.transition   = `d ${OPEN_MS}ms ease-out`;
+        pupil.style.transition = `opacity ${OPEN_MS}ms ease-out`;
+        iris.style.transition  = `opacity ${OPEN_MS}ms ease-out`;
+
+        eye.setAttribute("d", "M10 40 Q40 5 70 40 Q40 75 10 40 Z");
+        pupil.style.opacity = "1";
+        iris.style.opacity  = "0.25";  // matches the original SVG opacity
+      }, CLOSE_MS + HOLD_MS);
+    }
+
+    setInterval(blink, 4000);
+
+    /* ------------------ PASSWORD TOGGLE ------------------ */
+    const pwToggle   = document.getElementById("pw-toggle");
+    const pwInput    = document.getElementById("password");
+    const pwIconShow = document.getElementById("pw-icon-show");
+    const pwIconHide = document.getElementById("pw-icon-hide");
+
+    pwToggle.addEventListener("click", () => {
+      const isHidden = pwInput.type === "password";
+      pwInput.type          = isHidden ? "text" : "password";
+      pwIconShow.style.display = isHidden ? "none"  : "";
+      pwIconHide.style.display = isHidden ? ""      : "none";
+      pwToggle.setAttribute("aria-label",   isHidden ? "Hide password" : "Show password");
+      pwToggle.setAttribute("aria-pressed", isHidden ? "true"          : "false");
+    });
+    </script>
+</body>
+</html>
