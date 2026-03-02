@@ -9,10 +9,10 @@
 ## Table of Contents
 
 ## 1. [Overview](#1-overview)
-## 2. [Authentication](#5-authentication)
-## 3. [GraphQL Data Layer](#6-graphql-data-layer)
-## 4. [SVG Charts](#8-svg-charts)
-## 5. [Local Development](#12-local-development)
+## 2. [Authentication](#2-authentication)
+## 3. [GraphQL Data Layer](#3-graphql-data-layer)
+## 4. [SVG Charts](#4-svg-charts)
+## 5. [Local Development](#5-local-development)
 --- 
 ## 1. Overview
 
