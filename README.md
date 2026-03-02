@@ -8,11 +8,11 @@
 
 ## Table of Contents
 
-1. [Overview](#1-overview)
-2. [Authentication](#5-authentication)
-3. [GraphQL Data Layer](#6-graphql-data-layer)
-4. [SVG Charts](#8-svg-charts)
-5. [Local Development](#12-local-development)
+## 1. [Overview](#1-overview)
+## 2. [Authentication](#5-authentication)
+## 3. [GraphQL Data Layer](#6-graphql-data-layer)
+## 4. [SVG Charts](#8-svg-charts)
+## 5. [Local Development](#12-local-development)
 --- 
 ## 1. Overview
 
@@ -92,8 +92,7 @@ data is fetched, no UI is rendered, the user is redirected to login.
 
 ### Session persistence
 
-`localStorage` survives browser restarts. A user who logged in yesterday and
-visits today will be admitted immediately if their JWT hasn't expired. This is
+`localStorage` survives browser restarts. A user who logged in yesterday and visits today will be automatically authenticated if their JWT hasn't expired. This is
 intentional — the same behaviour as Gmail, GitHub, etc.
 
 ---
@@ -106,7 +105,7 @@ GraphQL is a query language for APIs. Instead of many REST endpoints
 (`/users`, `/transactions`, `/progress`), there is one endpoint and you
 describe exactly what data you want in the request body.
 
-Every request in this project is a POST to:
+Every GraphQL request in this project is sent as a POST to:
 ```
 https://platform.zone01.gr/api/graphql-engine/v1/graphql
 ```
@@ -155,19 +154,23 @@ query {
 ```
 
 **Nested query** — a field that returns a related object:
+
+`object` is a nested relationship that returns the related project metadata.
+
 ```graphql
 query {
   progress(order_by: { createdAt: desc }, limit: 100) {
     id
     grade
     createdAt
-    object {        ← nested object relationship
+    object {
       name
       type
     }
   }
 }
 ```
+---
 
 ### Available data
 
@@ -259,7 +262,7 @@ Open http://localhost:3000
 
 ### CORS during local development
 
-The Zone01 platform may not whitelist `localhost` as an allowed origin.
+The Zone01 platform may not whitelist `localhost` as an allowed CORS origin.
 If you see a CORS error in the console, deploy a preview to Vercel instead
 (see [Deployment](#13-deployment--vercel)) — your Vercel domain will be
 accepted by the API.
@@ -270,5 +273,4 @@ open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
   --args --disable-web-security --user-data-dir=/tmp/chrome-dev
 ```
 
-⚠️ Only use this window for testing. Close it when finished.
-
+⚠️ This disables browser security protections. Use only for local testing and close the window immediately after use.
