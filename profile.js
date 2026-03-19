@@ -24,8 +24,8 @@ const QUERY_XP = `
   query {
     transaction(
       where: {
-        type: { _eq: "xp" } 
-        path: { _like: "%/div-01/%" }
+        type: { _eq: "xp" }
+        attrs: { _is_null: true }
       }
       order_by: { createdAt: asc }
     ) {
