@@ -23,7 +23,10 @@ const QUERY_USER = `
 const QUERY_XP = `
   query {
     transaction(
-      where: { type: { _eq: "xp" } }
+      where: {
+        type: { _eq: "xp" } 
+        path: { _like: "%/div-01/%" }
+      }
       order_by: { createdAt: asc }
     ) {
       amount
