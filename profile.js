@@ -23,15 +23,31 @@ const QUERY_USER = `
 const QUERY_XP = `
   query {
     transaction(
-      where: {
-        type: { _eq: "xp" }
-        attrs: { _is_null: true }
+      where: { 
+      type: { _eq: "xp" },
+      path: { _like: "%/div-01/%" },
       }
       order_by: { createdAt: asc }
     ) {
       amount
       createdAt
       path
+    }
+  }
+`;
+
+// Level query — highest level transaction
+const QUERY_LEVEL = `
+  query {
+    transaction(
+      where: {
+        type: { _eq: "level" }
+        path: { _like: "%/div-01/%" }
+      }
+      order_by: { amount: desc }
+      limit: 1
+    ) {
+      amount
     }
   }
 `;
@@ -80,17 +96,6 @@ function timeAgo(dateStr) {
   return `${Math.floor(m / 12)}y ago`;
 }
 
-// Estimate level from XP (Zone01 uses 1000 * level^2 formula)
-function xpToLevel(xp) {
-  return Math.floor(Math.sqrt(xp / 1000));
-}
-
-function levelXPBounds(level) {
-  return {
-    start: 1000 * level * level,
-    end:   1000 * (level + 1) * (level + 1),
-  };
-}
 
 // ── Renderers ─────────────────────────────────────────────────────
 
@@ -116,31 +121,15 @@ function renderUserInfo(user) {
   if (nav) nav.textContent = user.login;
 }
 
-function renderLevelBar(totalXP) {
+function renderLevelBar(level) {
   const el = document.getElementById("user-level-bar");
   if (!el) return;
-
-  const level  = xpToLevel(totalXP);
-  const bounds = levelXPBounds(level);
-  const pct    = ((totalXP - bounds.start) / (bounds.end - bounds.start) * 100).toFixed(1);
 
   el.innerHTML = `
     <div class="level-bar-label">
       <span>Level ${level}</span>
-      <span>${pct}% → Level ${level + 1}</span>
-    </div>
-    <div class="level-bar-track">
-      <div class="level-bar-fill" style="width:0%" data-pct="${pct}"></div>
     </div>
   `;
-
-  // Animate fill
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      const fill = el.querySelector(".level-bar-fill");
-      if (fill) fill.style.width = pct + "%";
-    }, 200);
-  });
 }
 
 function renderXPInfo(transactions) {
@@ -249,10 +238,11 @@ async function initProfile() {
   setOverlay(true);
 
   try {
-    const [userData, xpData, progressData] = await Promise.all([
+    const [userData, xpData, progressData, levelData] = await Promise.all([
       gqlRequest(QUERY_USER),
       gqlRequest(QUERY_XP),
       gqlRequest(QUERY_PROGRESS),
+      gqlRequest(QUERY_LEVEL),
     ]);
 
     // ── User + Audit ──────────────────────────────────────────────
@@ -270,8 +260,8 @@ async function initProfile() {
     renderXPInfo(txs);
 
     if (txs.length > 0) {
-      const totalXP = txs.reduce((s, t) => s + t.amount, 0);
-      renderLevelBar(totalXP);
+      const level = levelData?.transaction?.[0]?.amount ?? 0;
+      renderLevelBar(level);
       drawSparkline("xp-sparkline", txs);
     }
 
